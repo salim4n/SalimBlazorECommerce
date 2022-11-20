@@ -1,5 +1,6 @@
 global using SalimBlazorECommerce.Shared;
 global using SalimBlazorECommerce.Server.Data;
+global using SalimBlazorECommerce.Server.Services.ProductService;
 using Microsoft.EntityFrameworkCore;
 
 
@@ -16,6 +17,8 @@ builder.Services.AddRazorPages();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Services.AddScoped<IProductService, ProductService>();
 
 var app = builder.Build();
 
