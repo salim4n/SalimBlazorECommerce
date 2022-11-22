@@ -1,8 +1,8 @@
-global using SalimBlazorECommerce.Shared;
 global using SalimBlazorECommerce.Server.Data;
 global using SalimBlazorECommerce.Server.Services.ProductService;
-using Microsoft.EntityFrameworkCore;
-
+global using SalimBlazorECommerce.Shared;
+global using Microsoft.EntityFrameworkCore;
+global using SalimBlazorECommerce.Server.Services.CategoryService;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,6 +19,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddScoped<IProductService, ProductService>();
+builder.Services.AddScoped<ICategoryService, CategoryService>();
 
 var app = builder.Build();
 

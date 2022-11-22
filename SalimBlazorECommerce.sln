@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.3.32929.385
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SalimBlazorECommerce.Server", "SalimBlazorECommerce\Server\SalimBlazorECommerce.Server.csproj", "{0C4A57F0-5C28-4373-9807-C7D787EDBA57}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SalimBlazorECommerce.Server", "SalimBlazorECommerce\Server\SalimBlazorECommerce.Server.csproj", "{0C4A57F0-5C28-4373-9807-C7D787EDBA57}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SalimBlazorECommerce.Client", "SalimBlazorECommerce\Client\SalimBlazorECommerce.Client.csproj", "{7CC64FFF-1DD2-485A-9F4E-F36BB73CC135}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SalimBlazorECommerce.Client", "SalimBlazorECommerce\Client\SalimBlazorECommerce.Client.csproj", "{7CC64FFF-1DD2-485A-9F4E-F36BB73CC135}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SalimBlazorECommerce.Shared", "SalimBlazorECommerce\Shared\SalimBlazorECommerce.Shared.csproj", "{AD9BF770-98EE-4A95-94AA-5B3188AEDCAB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SalimBlazorECommerce.Shared", "SalimBlazorECommerce\Shared\SalimBlazorECommerce.Shared.csproj", "{AD9BF770-98EE-4A95-94AA-5B3188AEDCAB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
