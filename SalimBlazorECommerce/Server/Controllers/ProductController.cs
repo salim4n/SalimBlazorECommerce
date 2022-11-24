@@ -33,5 +33,26 @@ namespace SalimBlazorECommerce.Server.Controllers
             var result = await _productService.GetProductsByCategory(categoryUrl);
             return Ok(result);
         }
+
+        [HttpGet("search/{searchtext}")]
+        public async Task<ActionResult<ServiceResponse<Product>>> SearchProducts(string searchtext)
+        {
+            var result = await _productService.SearchProducts(searchtext);
+            return Ok(result);
+        }
+
+        [HttpGet("searchsuggestion/{searchtext}")]
+        public async Task<ActionResult<ServiceResponse<Product>>> GetProductSearchSuggestion(string searchtext)
+        {
+            var result = await _productService.GetProductSearchSuggestion(searchtext);
+            return Ok(result);
+        }
+
+        [HttpGet("featured")]
+        public async Task<ActionResult<ServiceResponse<Product>>> GetFeaturedProducts()
+        {
+            var result = await _productService.GetFeaturedProducts();
+            return Ok(result);
+        }
     }
 }
