@@ -1,5 +1,6 @@
 ﻿@inject IProductService ProductService
 
+
 @if(ProductService.Products == null || ProductService.Products.Count == 0)
 {
     <span>@ProductService.Message</span>
@@ -27,6 +28,14 @@ else
             </li>
         }
     </ul>
+
+    @for(var i = 1; i <= ProductService.PageCount; i ++)
+    {
+        <a class="btn @(i == ProductService.CurrentPage ? "btn-info" : "btn-outline")
+                    page-selection"
+                    href="/search/@ProductService.LastSearchText/@i">@i</a>
+                    
+    }
 }
 
 

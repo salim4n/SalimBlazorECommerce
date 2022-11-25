@@ -34,10 +34,10 @@ namespace SalimBlazorECommerce.Server.Controllers
             return Ok(result);
         }
 
-        [HttpGet("search/{searchtext}")]
-        public async Task<ActionResult<ServiceResponse<Product>>> SearchProducts(string searchtext)
+        [HttpGet("search/{searchtext}/{page}")]
+        public async Task<ActionResult<ServiceResponse<ProductSearchResult>>> SearchProducts(string searchtext,int page)
         {
-            var result = await _productService.SearchProducts(searchtext);
+            var result = await _productService.SearchProducts(searchtext, page);
             return Ok(result);
         }
 
