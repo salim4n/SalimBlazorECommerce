@@ -26,13 +26,7 @@ else
 
     protected override async Task OnParametersSetAsync()
     {
-        if(searchText != null){
-            await ProductService.SearchProducts(searchText, Page);
-        }
-        else
-        {
-            await ProductService.GetProducts(CategoryUrl);
-        }
-       
+        if(searchText != null) await ProductService.SearchProducts(searchText, Page);
+        else await ProductService.GetProducts(CategoryUrl);
     }
 }

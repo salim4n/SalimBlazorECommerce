@@ -4,10 +4,7 @@
     {
         private readonly DataContext _context;
 
-        public ProductService(DataContext context)
-        {
-            _context = context;
-        }
+        public ProductService(DataContext context) => _context = context;
 
         public async Task<ServiceResponse<List<Product>>> GetFeaturedProducts()
         {

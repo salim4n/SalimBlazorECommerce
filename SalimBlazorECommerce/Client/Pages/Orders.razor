@@ -1,0 +1,43 @@
+﻿@page "/orders"
+@inject IOrderService OrderService
+
+
+
+<h3>orders</h3>
+
+@if(oor == null)
+{
+    <span>Loading you orders</span>
+}
+
+
+@if(oor.Count == 0)
+{
+    <span>You have no orders actually</span>
+}
+else
+{
+    foreach (var order in oor)
+    {
+        <div class="container">
+            <div class="image-wrapper">
+                <img src="@order.ProductImageUrl" class="image" />
+            </div>
+            <div class="details">
+                <h4>@order.Product</h4>
+                <span>@order.OrderDate</span><br />
+                <a href="orders/@order.Id">Show more...</a>
+            </div>
+            <div class="order-price">
+                $@order.TotalPrice
+            </div>
+        </div>
+    }
+}
+
+@code {
+    List<OrderOverviewResponse> oor = null;
+
+    protected override async Task OnInitializedAsync() => oor = await OrderService.GetOrders();
+
+}

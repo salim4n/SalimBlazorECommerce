@@ -1,5 +1,8 @@
 ﻿@page "/cart"
 @inject ICartService CartService
+@inject IAuthService AuthService
+@inject NavigationManager NavigationManager
+@inject IOrderService OrderService
 
 
 <PageTitle>Shopping Cart</PageTitle>
@@ -7,6 +10,10 @@
 @if(cartProducts == null || cartProducts.Count == 0)
 {
     <span>@message</span>
+}
+else if (orderPlaced)
+{
+    <span>Thank you for the order, You can check your orders <a href="orders">here</a></span>
 }
 else
 {
@@ -33,34 +40,38 @@ else
            Total (@cartProducts.Count): $@cartProducts.Sum(product => @product.Price * product.Quantity)
        </div>
     </div>
+    <button @onclick="PlaceOrder" class="btn btn-success float-end mt-1">Place Order</button>
 }
+
 
 
 @code {
 
     List<CartProductResponse> cartProducts = null;
     string message = "Loading cart...";
+    bool isAuthenticated = false;
+    bool orderPlaced = false;
 
     protected override async Task OnInitializedAsync()
     {
+        orderPlaced = false;
+        isAuthenticated = await AuthService.IsUserAuthenticated();
         await LoadCart();
     }
 
     private async Task RemoveProductFromCart(int productId, int productTypeId)
     {
         await CartService.RemoveProductFromCart(productId, productTypeId);
+        await LoadCart();
     }
 
     private async Task LoadCart()
     {
-        if ((await CartService.GetCartItems()).Count == 0)
+        await CartService.GetCartItemsCount();
+        cartProducts = await CartService.GetCartProducts();
+        if (cartProducts == null || cartProducts.Count == 0)
         {
-            message = "Your Cart is Empty.";
-            cartProducts = new List<CartProductResponse>();
-        }
-        else
-        {
-            cartProducts = await CartService.GetCartProducts();
+            message = "Your cart is empty.";
         }
     }
 
@@ -69,6 +80,12 @@ else
         product.Quantity = int.Parse(e.Value.ToString());
         if (product.Quantity < 1)
             product.Quantity = 1;
-            await CartService.UpdateQuantity(product);
+        await CartService.UpdateQuantity(product);
+    }
+
+    private async Task PlaceOrder(){
+        await OrderService.PlaceOrder();
+        await CartService.GetCartItemsCount();
+        orderPlaced = true;
     }
 }

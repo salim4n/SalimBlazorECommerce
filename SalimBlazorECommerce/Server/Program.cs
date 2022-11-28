@@ -1,18 +1,25 @@
-global using SalimBlazorECommerce.Server.Data;
-global using SalimBlazorECommerce.Server.Services.ProductService;
+
 global using SalimBlazorECommerce.Shared;
 global using Microsoft.EntityFrameworkCore;
+global using SalimBlazorECommerce.Server.Data;
+global using SalimBlazorECommerce.Server.Services.ProductService;
 global using SalimBlazorECommerce.Server.Services.CategoryService;
+global using SalimBlazorECommerce.Server.Services.AuthService;
 global using SalimBlazorECommerce.Server.Services.CartService;
+global using SalimBlazorECommerce.Server.Services.OrderService;
+using Microsoft.AspNetCore.ResponseCompression;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+
 builder.Services.AddDbContext<DataContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
-
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
 
@@ -22,6 +29,22 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddScoped<ICartService, CartService>();
+builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<IOrderService, OrderService>();
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuerSigningKey = true,
+            IssuerSigningKey =
+                new SymmetricSecurityKey(System.Text.Encoding.UTF8
+                .GetBytes(builder.Configuration.GetSection("AppSettings:Token").Value)),
+            ValidateIssuer = false,
+            ValidateAudience = false
+        };
+    });
+builder.Services.AddHttpContextAccessor();
 
 var app = builder.Build();
 
@@ -47,6 +70,8 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseAuthentication();
+app.UseAuthorization();
 
 app.MapRazorPages();
 app.MapControllers();
