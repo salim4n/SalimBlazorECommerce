@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="Pages\OrderSuccess.razor" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Blazored.LocalStorage" Version="4.3.0" />
     <PackageReference Include="Microsoft.AspNetCore.Components.Authorization" Version="6.0.11" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="6.0.11" />
@@ -16,6 +20,18 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Shared\SalimBlazorECommerce.Shared.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Pages\OrderSuccess.razor" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="Pages\OrderSuccess.razor" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Pages\OrderSuccess.razor" />
   </ItemGroup>
 
 </Project>
