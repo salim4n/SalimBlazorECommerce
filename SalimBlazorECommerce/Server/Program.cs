@@ -9,6 +9,7 @@ global using SalimBlazorECommerce.Server.Services.CartService;
 global using SalimBlazorECommerce.Server.Services.OrderService;
 global using SalimBlazorECommerce.Server.Services.PaymentService;
 global using SalimBlazorECommerce.Server.Services.AddressService;
+global using SalimBlazorECommerce.Server.Services.ProductTypeService;
 using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
@@ -35,6 +36,7 @@ builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IOrderService, OrderService>();
 builder.Services.AddScoped<IPaymentService, PaymentService>();
 builder.Services.AddScoped<IAddressService, AddressService>();
+builder.Services.AddScoped<IProductTypeService, ProductTypeService>();
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
