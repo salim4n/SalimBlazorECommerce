@@ -3,7 +3,7 @@
 
 @if(ProductService.Products == null || ProductService.Products.Count == 0)
 {
-    <span>@ProductService.Message</span>
+    <MudProgressCircular Color="Color.Primary" Indeterminate="true" />
 }
 else
 {
@@ -11,6 +11,7 @@ else
 
         @foreach (var product in ProductService.Products)
         {
+          
 
             <li class="oi-media-pause my-3">
                 <div class="media-img-wrapper mr-2">

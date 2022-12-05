@@ -4,7 +4,7 @@
 <center><h2>Top Product Actually</h2></center>
 @if(ProductService.Products == null || ProductService.Products.Count == 0)
 {
-    <span>@ProductService.Message</span>
+    <MudProgressCircular Color="Color.Primary" Indeterminate="true" />
 }
 else
 {

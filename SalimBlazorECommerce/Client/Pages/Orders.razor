@@ -6,6 +6,7 @@
 @if (orders == null)
 {
     <span>Loading your orders...</span>
+        <MudProgressCircular Color="Color.Primary" Indeterminate="true" />
 }
 else if (orders.Count <= 0)
 {
