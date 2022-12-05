@@ -63,6 +63,7 @@ namespace SalimBlazorECommerce.Server.Services.ProductService
             {
                 Data = await _context.Products.Where(p => p.Featured && p.Visible && !p.Deleted)
                 .Include(p => p.Variants.Where(v => v.Visible && !v.Deleted))
+                .Include(p => p.Images)
                 .ToListAsync()
             };
             return response;
@@ -77,12 +78,14 @@ namespace SalimBlazorECommerce.Server.Services.ProductService
             {
                 product = await _context.Products.Include(p => p.Variants.Where(v =>  !v.Deleted))
                 .ThenInclude(v => v.ProductType)
+                .Include(p => p.Images)
                 .FirstOrDefaultAsync(p => p.Id == productId && !p.Deleted );
             }
             else
             {
                 product = await _context.Products.Include(p => p.Variants.Where(v => v.Visible && !v.Deleted))
                 .ThenInclude(v => v.ProductType)
+                .Include(p => p.Images)
                 .FirstOrDefaultAsync(p => p.Id == productId && !p.Deleted && p.Visible);
             }
             
@@ -118,6 +121,7 @@ namespace SalimBlazorECommerce.Server.Services.ProductService
                 Data = await _context.Products
                 .Where(p => p.Category.Url.ToLower().Equals(categoryUrl.ToLower()) && p.Visible && !p.Deleted)
                 .Include(p => p.Variants.Where(v => v.Visible && !v.Deleted))
+                .Include(p => p.Images)
                 .ToListAsync()
             };
 
@@ -167,6 +171,7 @@ namespace SalimBlazorECommerce.Server.Services.ProductService
                             ||
                             p.Description.ToLower().Contains(searchtext.ToLower()) && p.Visible && !p.Deleted)
                             .Include(p => p.Variants)
+                            .Include(p => p.Images)
                             .Skip((page - 1) * (int)pageResult)
                             .Take((int)pageResult)
                             .ToListAsync();
@@ -185,7 +190,10 @@ namespace SalimBlazorECommerce.Server.Services.ProductService
 
         public async Task<ServiceResponse<Product>> UpdateProduct(Product product)
         {
-            var dbProduct = await _context.Products.FindAsync(product.Id);
+            var dbProduct = await _context.Products
+               .Include(p => p.Images)
+               .FirstOrDefaultAsync(p => p.Id == product.Id);
+
             if (dbProduct == null)
             {
                 return new ServiceResponse<Product>
@@ -201,6 +209,10 @@ namespace SalimBlazorECommerce.Server.Services.ProductService
             dbProduct.CategoryId = product.CategoryId;
             dbProduct.Visible = product.Visible;
             dbProduct.Featured = product.Featured;
+
+            var productImages = dbProduct.Images;
+            _context.Images.RemoveRange(productImages);
+            dbProduct.Images = product.Images;
 
             foreach(var variant in product.Variants)
             {
